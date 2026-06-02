@@ -1,0 +1,14 @@
+# Never commit actual config (it has your paths)
+backup.config
+
+# Logs are local only
+logs/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Backup archives (large binary files)
+*.tar.gz
+*.tar.bz2
+*.zip

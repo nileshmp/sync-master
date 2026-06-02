@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  backup.config.example
+#  Copy this to backup.config and edit to your needs.
+#  This file is gitignored — your actual paths never get committed.
+# ─────────────────────────────────────────────────────────────────────────────
+#
+#  MAPPING FORMAT
+#  ──────────────
+#  Each profile is a list of MAPPINGS, one per line, using this syntax:
+#
+#    /source/path : /dest1, /dest2, /dest3
+#
+#  Rules:
+#    • Source  — a single directory or file to back up
+#    • Dest    — one or more destinations, comma-separated
+#    • ~ is expanded to your home directory
+#    • Lines starting with # are comments (ignored)
+#    • Blank lines are ignored
+#    • Whitespace around : and , is optional
+#
+#  Example — back up Documents to both an HDD and a NAS:
+#    ~/Documents : /Volumes/HDD/Backups, /Volumes/NAS/Backups
+#
+#  Example — back up multiple sources, each to different destinations:
+#    ~/Projects  : /Volumes/HDD/Code, /Volumes/NAS/Code
+#    ~/.ssh      : /Volumes/HDD/Dotfiles
+#    ~/Documents : /Volumes/HDD/Docs, /Volumes/NAS/Docs
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+[profile:default]
+~/Documents  : /Volumes/MyHDD/Backups/Documents, /Volumes/MyNAS/Mirror/Documents
+~/Desktop    : /Volumes/MyHDD/Backups/Desktop
+~/.config    : /Volumes/MyHDD/Backups/Config
+
+[profile:work]
+~/Projects   : /Volumes/MyHDD/Backups/Projects, /Volumes/MyNAS/Mirror/Projects
+~/.ssh       : /Volumes/MyHDD/Backups/SSH
+~/work-notes : /Volumes/MyHDD/Backups/Notes
+
+[profile:photos]
+~/Pictures   : /Volumes/MyHDD/Backups/Pictures, /Volumes/MyNAS/Mirror/Pictures
+
+# ── Excludes ──────────────────────────────────────────────────────────────────
+# Comma-separated glob patterns excluded from ALL syncs across all profiles.
+[excludes]
+node_modules, .git, __pycache__, .DS_Store, *.tmp, *.log, venv, .venv, dist, build, .cache
+
+# ── Archive retention ──────────────────────────────────────────────────────────
+# When --compress is used, how many .tar.gz archives to keep per destination.
+[settings]
+ARCHIVE_KEEP=5

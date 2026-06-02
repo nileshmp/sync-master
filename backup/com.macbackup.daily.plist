@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.macbackup.daily</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <!-- UPDATE THIS PATH to match your actual location -->
+    <string>/Users/YOUR_USERNAME/macbackup/backup.sh</string>
+    <string>--compress</string>
+  </array>
+
+  <!-- Run daily at 11:00 PM -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>23</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <!-- Run on next opportunity if machine was asleep -->
+  <key>RunAtLoad</key>
+  <false/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/YOUR_USERNAME/macbackup/logs/launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/YOUR_USERNAME/macbackup/logs/launchd_err.log</string>
+</dict>
+</plist>
