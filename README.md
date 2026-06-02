@@ -69,6 +69,9 @@ nano backup.config
 # Show what differs between source and destination (no changes made)
 ./backup.sh --diff
 ./backup.sh --diff --profile work
+
+# Show all example commands
+./backup.sh --usage
 ```
 
 ---

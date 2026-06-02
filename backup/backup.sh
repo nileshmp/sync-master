@@ -61,18 +61,50 @@ usage() {
   echo "  --profile <name>    Use a named profile from backup.config (default: 'default')"
   echo "  --verbose           Show every file being transferred"
   echo "  --list-profiles     List all profiles defined in backup.config"
+  echo "  --usage             Show example commands"
   echo "  --help              Show this help"
   echo ""
   echo "Config format (backup.config):"
   echo "  [profile:work]"
   echo "  ~/Projects  : /Volumes/HDD/Code, /Volumes/NAS/Code"
   echo "  ~/.ssh      : /Volumes/HDD/Dotfiles"
+  exit 0
+}
+
+show_usage_examples() {
+  echo -e "${BOLD}macbackup — example commands${NC}"
   echo ""
-  echo "Examples:"
-  echo "  ./backup.sh"
-  echo "  ./backup.sh --compress"
-  echo "  ./backup.sh --profile work --dry-run"
-  echo "  ./backup.sh --profile photos --compress --verbose"
+  echo -e "${BOLD}Basic sync${NC}"
+  echo "  ./backup.sh                                   # sync default profile"
+  echo "  ./backup.sh --profile work                    # sync a named profile"
+  echo "  ./backup.sh --profile photos                  # sync photos profile"
+  echo ""
+  echo -e "${BOLD}Preview (no changes made)${NC}"
+  echo "  ./backup.sh --dry-run                         # show what would be copied"
+  echo "  ./backup.sh --dry-run --profile work          # dry-run for a named profile"
+  echo "  ./backup.sh --diff                            # show what differs between source and destination"
+  echo "  ./backup.sh --diff --profile work             # diff for a named profile"
+  echo ""
+  echo -e "${BOLD}Verbose output${NC}"
+  echo "  ./backup.sh --verbose                         # print every file transferred"
+  echo "  ./backup.sh --verbose --profile work          # verbose for a named profile"
+  echo ""
+  echo -e "${BOLD}Compression${NC}"
+  echo "  ./backup.sh --compress                        # sync and create a .tar.gz archive per destination"
+  echo "  ./backup.sh --compress --profile photos       # compress a named profile"
+  echo ""
+  echo -e "${BOLD}Mirror (destructive — deletes extra files on destination)${NC}"
+  echo "  ./backup.sh --mirror --dry-run                # preview what would be deleted"
+  echo "  ./backup.sh --mirror                          # exact-copy source → destination"
+  echo "  ./backup.sh --mirror --profile work           # mirror a named profile"
+  echo ""
+  echo -e "${BOLD}Combining flags${NC}"
+  echo "  ./backup.sh --profile work --compress --verbose"
+  echo "  ./backup.sh --profile photos --compress --dry-run"
+  echo "  ./backup.sh --profile work --mirror --dry-run"
+  echo ""
+  echo -e "${BOLD}Profiles${NC}"
+  echo "  ./backup.sh --list-profiles                   # list all profiles in backup.config"
   exit 0
 }
 
@@ -87,6 +119,7 @@ while [[ $# -gt 0 ]]; do
     --profile)       PROFILE="${2:-default}"; shift 2 ;;
     --list-profiles) LIST_PROFILES=true; shift ;;
     --help|-h)       usage ;;
+    --usage)         show_usage_examples ;;
     *) error "Unknown option: $1. Run --help for usage." ;;
   esac
 done
